@@ -72,9 +72,6 @@ export default class Reset extends React.Component {
     render() {
         return (
             <div>
-                <div className="logo-container">
-                    <img className="logo-big" src="guinea2.jpg"></img>
-                </div>
                 {this.state.error && (
                     <div className="error">
                         Oops, there has been an error, please make sure to fill
@@ -84,9 +81,9 @@ export default class Reset extends React.Component {
 
                 {this.state.step == "start" && (
                     <div>
-                        <div className="reset-container">
+                        <div className="container">
                             <input
-                                className="input-reset"
+                                className="input"
                                 placeholder="E-Mail-Address"
                                 name="email"
                                 onChange={e => this.handleChange(e)}
@@ -103,15 +100,15 @@ export default class Reset extends React.Component {
 
                 {this.state.step == "verify" && (
                     <div>
-                        <div className="reset-container">
+                        <div className="container">
                             <input
-                                className="input-reset"
+                                className="input"
                                 placeholder="Reset-Code"
                                 name="resetcode"
                                 onChange={e => this.handleChange(e)}
                             />
                             <input
-                                className="input-reset"
+                                className="input"
                                 placeholder="New Password"
                                 name="newpassword"
                                 type="password"

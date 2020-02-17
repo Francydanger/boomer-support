@@ -3,5 +3,51 @@
 }
 
 .small-image {
-    height: 150px;
+    height: 200px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input {
+    width: 200px;
+    height: 30px;
+    margin: 20px;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.select {
+    width: 200px;
+    height: 30px;
+    margin: 20px;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+.button {
+    font-size: 1.2em;
+    color: lightgrey;
+    font-weight: bolder;
+    border-radius: 15px;
+    border-color: lightgrey;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link {
+    text-decoration: none;
+    color: lightgrey;
+    font-weight: bolder;
 }

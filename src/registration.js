@@ -52,49 +52,46 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <h2>Please register here</h2>
-                    {/* <img className="logo-big" src="guinea2.jpg"></img> */}
-                </div>
-
                 {this.state.error && (
                     <div className="error">
                         Oops, there has been an error, please make sure to fill
                         out all fields
                     </div>
                 )}
-                <div className="register-container">
+                <div className="container">
+                    <h2>Please register here</h2>
                     <input
-                        className="input-register"
+                        className="input"
                         placeholder="First Name"
                         name="first"
                         onChange={e => this.handleChange(e)}
                     />
 
                     <input
-                        className="input-register"
+                        className="input"
                         placeholder="Last Name"
                         name="last"
                         onChange={e => this.handleChange(e)}
                     />
-                    <div>
+                    <div className="center">
                         <h3>Please choose your category</h3>
                         <select
                             onChange={e => this.handleChange(e)}
                             name="category"
+                            className="select"
                         >
                             <option value="boomer">Boomer</option>
                             <option value="millenial">Millenial</option>
                         </select>
                     </div>
                     <input
-                        className="input-register"
+                        className="input"
                         placeholder="E-Mail-Address"
                         name="email"
                         onChange={e => this.handleChange(e)}
                     />
                     <input
-                        className="input-register"
+                        className="input"
                         placeholder="Password"
                         type="password"
                         name="password"

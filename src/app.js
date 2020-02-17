@@ -1,40 +1,35 @@
 import React, { useState, useEffect } from "react";
-import axios from "./axios";
-import Uploader from "./uploader";
-import Profile from "./profile";
+
+// import axios from "./axios";
+// import Uploader from "./uploader";
+// import Profile from "./profile";
 import { BrowserRouter, Route } from "react-router-dom";
-import OtherProfile from "./other-profile";
-import Header from "./header";
-import Footer from "./footer";
-import FindPeople from "./findpeople";
-import Friends from "./friends";
-import { Chat } from "./chats";
-import Home from "./home";
-import { useSelector } from "react-redux";
+// import OtherProfile from "./other-profile";
+// import Header from "./header";
+// import Footer from "./footer";
+// import FindPeople from "./findpeople";
+// import Friends from "./friends";
+// import { Chat } from "./chats";
+// import Home from "./home";
+import { useDispatch, useSelector } from "react-redux";
+import { putUserInfoInRedux } from "./actions";
 
 export default function App() {
+    const dispatch = useDispatch();
+    const users = useSelector(state => state && state.users);
+    console.log("users from global state: ", users);
     useEffect(() => {
-        console.log("component did mount");
-        axios
-            .get("/user.json")
-            .then(({ data }) => {
-                console.log("Data in componentndidmountmainwrapping: ", data);
-                this.setState(data);
-            })
-            .catch(error => {
-                console.log("Error in catch axios get user: ", error);
-                this.setState({
-                    error: true
-                });
-            });
+        console.log("useeffect is going on");
+        dispatch(putUserInfoInRedux());
     }, []);
 
-    if (!this.state.id) {
-        return "Loading"; //or progressbar.gif or something - this works because render runs again as soon as a state change happens!
-    }
+    // if (!this.state.id) {
+    //     return "Loading"; //or progressbar.gif or something - this works because render runs again as soon as a state change happens!
+    // }
     return (
         <BrowserRouter>
-            <Header
+            <div>Hello I am the app and i am alive</div>
+            {/* <Header
                 first={this.state.first}
                 last={this.state.last}
                 imageUrl={this.state.imageUrl}
@@ -87,11 +82,11 @@ export default function App() {
                     )}
                 />
                 <Route path="/friends" component={Friends} />
-                {/* <Route path="/chathooks" component={Chathooks} /> */}
+            <Route path="/chathooks" component={Chathooks} />
                 <Route path="/chats" component={Chat} />
                 <Route path="*" component={Footer} />
             </div>
-            {/* <Footer /> */}
+            <Footer /> */}
         </BrowserRouter>
     );
 }

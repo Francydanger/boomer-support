@@ -171,6 +171,28 @@ app.post("/reset/verify", (req, res) => {
         });
 });
 
+app.get("/user.json", (req, res) => {
+    console.log("in get user req.body: ", req.body);
+    console.log("in get user req.session.email", req.session.email);
+    db.getUsers(req.session.email)
+        .then(rows => {
+            console.log("hello these are the rows from getusers", rows);
+            res.json({
+                last: rows[0].last,
+                first: rows[0].first,
+                id: rows[0].id,
+                category: rows[0].category
+            });
+        })
+        .catch(error => {
+            console.log(
+                "Error in get user, which was very likely to happen",
+                error
+            );
+            res.json({ error: true });
+        });
+});
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
