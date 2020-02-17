@@ -6,6 +6,7 @@ const db = require("./db");
 const bcrypt = require("./bcrypt");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
+const ses = require("./ses");
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -67,6 +68,105 @@ app.post("/register", (req, res) => {
         })
         .catch(error => {
             console.log("Error in db.addusers: ", error);
+            res.json({ error: true });
+        });
+});
+
+app.post("/login", (req, res) => {
+    db.getUsers(req.body.email)
+        .then(results => {
+            bcrypt
+                .compare(req.body.password, results[0].password)
+                .then(function(comparison) {
+                    if (comparison == true) {
+                        req.session.userId = results[0].id;
+                        req.session.email = req.body.email;
+                        req.session.first = req.body.first;
+                        req.session.last = req.body.last;
+                        req.session.category = req.body.category;
+                        console.log("results: ", results);
+                        res.json(results);
+                    } else {
+                        res.json({ error: true });
+                    }
+                })
+                .catch(error => {
+                    console.log("Error in compare POST login", error);
+                    res.json({ error: true });
+                });
+        })
+        .catch(error => {
+            console.log("Error in POST login", error);
+            res.json({ error: true });
+        });
+});
+
+app.post("/reset/start", (req, res) => {
+    db.getUsers(req.body.email).then(function(data) {
+        if (data.length > 0) {
+            const secretCode = cryptoRandomString({
+                length: 6
+            });
+            ses.sendEmail(
+                "franziska.vesely@gmail.com",
+                `Hello this is your resetcode: please enter the following code into the prepared input field: ${secretCode}, if you care to see a short video of what is the easiest way to copy  this code from this email to your browser: clicke here (links follows....) `,
+                "Password Reset"
+            );
+            db.addCodesUpsert(req.body.email, secretCode)
+                .then(function() {
+                    // console.log("Data from addCodes: ", data);
+                    res.json({ success: true });
+                })
+                .catch(error => {
+                    console.log("Error in POST reset/start", error);
+                    res.json({ error: true });
+                });
+        } else {
+            res.json({ error: true });
+        }
+    });
+});
+
+app.post("/reset/verify", (req, res) => {
+    console.log("hello verify speaking");
+    console.log("Req.body in post reset verify", req.body);
+    db.checkCode(req.body.email)
+        .then(data => {
+            // console.log("Data from reset checkcode", data);
+            if (req.body.code == data.rows[0].secretcode) {
+                console.log("Resetcode correct");
+                let password = req.body.newpassword;
+                bcrypt
+                    .hash(password)
+                    .then(hashedPass => {
+                        console.log(
+                            "Req.body shortly before passing to updatepassword: ",
+                            req.body
+                        );
+                        db.updatePassword(hashedPass, req.body.email)
+                            .then(() => {
+                                // console.log("rows after hash pass etc", data);
+                                res.json({ success: true });
+                            })
+                            .catch(error => {
+                                console.log(
+                                    "Error in POST reset/verify",
+                                    error
+                                );
+                                res.json({ error: true });
+                            });
+                    })
+                    .catch(error => {
+                        console.log("Error in POST reset/verify", error);
+                        res.json({ error: true });
+                    });
+            } else {
+                console.log("No match between the codes");
+                res.json({ error: true });
+            }
+        })
+        .catch(error => {
+            console.log("Error in POST reset/verify", error);
             res.json({ error: true });
         });
 });
