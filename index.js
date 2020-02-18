@@ -8,6 +8,11 @@ const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
 
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    origins: "localhost:8080"
+}); //origins to prevent csrf attacks, its a whitelist of hostes it accepts requests from, also dont forget to put heroku here when you heroku it blblabl.herokuapp.com:*
+
 if (process.env.NODE_ENV != "production") {
     app.use(
         "/bundle.js",
@@ -32,6 +37,10 @@ const cookieSessionMiddleware = cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14
 });
 app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(express.json());
 app.use(csurf());
@@ -193,10 +202,82 @@ app.get("/user.json", (req, res) => {
         });
 });
 
+app.get("/welcome", function(req, res) {
+    if (req.session.userId) {
+        res.redirect("/"); //for now
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+// app.get("/logout", function(req, res) {
+//     req.session = null;
+//     res.redirect("/login");
+// });
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
+});
+
+////SOCKET SERVER////
+
+let onlineUsers = {};
+io.on("connection", function(socket) {
+    console.log(socket.request.session);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+    const userId = socket.request.session.userId;
+    console.log(userId);
+    io.sockets.emit("LoggedInId", userId);
+    console.log(
+        `socket with the id ${socket.id} is now connected to the userId: ${userId}`
+    );
+    onlineUsers[socket.id] = userId;
+    console.log("OnlineUsers: ", onlineUsers);
+    socket.on("disconnect", function() {
+        console.log(
+            `socket with the id ${socket.id} is now disconnected with userId: ${userId} `
+        );
+        delete onlineUsers[socket.id];
+    });
+    var arrayOfOnlineUserIds = [...new Set(Object.values(onlineUsers))];
+    console.log(Object.values(onlineUsers));
+    console.log(arrayOfOnlineUserIds);
+
+    db.getUserDataByArray(arrayOfOnlineUserIds).then(data => {
+        console.log("Data form data usersby id in socket thingee: ", data);
+
+        io.sockets.emit("Online Users", data);
+    });
+
+    db.getLastTenChatMessages()
+        .then(data => {
+            // console.log("Data from last ten chat messageas", data);
+            io.sockets.emit(
+                "get 10 Messages from back to front",
+                data.reverse()
+            );
+        })
+        .catch(err => console.log(err));
+
+    socket.on("chatMessage", msg => {
+        console.log("msg on the server and userId: ", msg, userId);
+        db.addChatMessages(userId, msg).then(chatData => {
+            console.log("chatdata", chatData);
+            db.getUsersById(userId).then(data => {
+                data[0].message = msg;
+                data[0].user_id = userId;
+                data[0].id = chatData.rows[0].id; //this gives each message th chat id
+                console.log(
+                    "Data from getuser id within socket on chatmessage",
+                    data
+                );
+                io.sockets.emit("get one Message from back to front", data);
+            });
+        });
+    });
 });

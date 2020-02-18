@@ -9,7 +9,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 // import Footer from "./footer";
 // import FindPeople from "./findpeople";
 // import Friends from "./friends";
-// import { Chat } from "./chats";
+import { Chat } from "./chat";
 // import Home from "./home";
 import { useDispatch, useSelector } from "react-redux";
 import { putUserInfoInRedux } from "./actions";
@@ -26,10 +26,24 @@ export default function App() {
     // if (!this.state.id) {
     //     return "Loading"; //or progressbar.gif or something - this works because render runs again as soon as a state change happens!
     // }
-    return (
-        <BrowserRouter>
-            <div>Hello I am the app and i am alive</div>
-            {/* <Header
+
+    if (users && users.category == "millenial") {
+        return (
+            <BrowserRouter>
+                <div className="millenial">
+                    I am the millenial div
+                    <div>
+                        <Route exact path="/chat" render={() => <Chat />} />
+                    </div>
+                </div>
+            </BrowserRouter>
+        );
+    } else if (users && users.category == "boomer") {
+        return (
+            <BrowserRouter>
+                <div>Hello I am the app and i am alive</div>
+                <div className="boomer">I am the boomer div</div>
+                {/* <Header
                 first={this.state.first}
                 last={this.state.last}
                 imageUrl={this.state.imageUrl}
@@ -87,6 +101,14 @@ export default function App() {
                 <Route path="*" component={Footer} />
             </div>
             <Footer /> */}
-        </BrowserRouter>
-    );
+            </BrowserRouter>
+        );
+    } else
+        return (
+            <h1>
+                Sorry, an error has occured, please wait another 5 seconds and
+                if still nothing happens there is a problem on my side, so do
+                not worry, you did not do anything wrong
+            </h1>
+        );
 }

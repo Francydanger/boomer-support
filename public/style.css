@@ -51,3 +51,10 @@
     color: lightgrey;
     font-weight: bolder;
 }
+
+.millenial {
+    background-color: green;
+}
+.boomer {
+    background-color: pink;
+}

@@ -42,3 +42,42 @@ exports.updatePassword = function(password, email) {
         email
     ]);
 };
+
+exports.getUsersById = function(id) {
+    return db
+        .query(
+            `SELECT first, last, email, category  FROM users WHERE id = $1;`,
+            [id]
+        )
+        .then(({ rows }) => {
+            return rows;
+        });
+};
+
+exports.getLastTenChatMessages = function() {
+    return db
+        .query(
+            `SELECT chats.id, users.id as user_id, first, last, category, message, created_at FROM users JOIN chats ON users.id = chats.sender_id ORDER BY id DESC LIMIT 10;`
+        )
+        .then(({ rows }) => {
+            return rows;
+        });
+};
+
+exports.addChatMessages = function(sender_id, message) {
+    return db.query(
+        `INSERT INTO chats (sender_id, message) VALUES ($1, $2) RETURNING id;`,
+        [sender_id, message]
+    );
+};
+
+exports.getUserDataByArray = function(array) {
+    return db
+        .query(
+            `SELECT first, last, email, category FROM users WHERE id = ANY($1)`,
+            [array]
+        )
+        .then(({ rows }) => {
+            return rows;
+        });
+};
