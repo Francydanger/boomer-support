@@ -300,23 +300,27 @@ io.on("connection", function(socket) {
         );
         socketIdOfChatee = socketListForPrivateChat[id];
         socketIdOfChater = socketListForPrivateChat[userId];
-        db.addChatOverviewUpsert(userId, id)
-            .then(chatId => {
+        db.checkIfConversationExists(userId, id).then(chatId => {
+            if (chatId.length > 0) {
                 db.getUsersById(id)
                     .then(data => {
                         data[0].chatter = userId;
                         data[0].chattee = id;
-                        data[0].chatId = chatId.rows[0].id;
-                        db.getLastTenPrivateChatMessages(
-                            chatId.rows[0].id
-                        ).then(lastdata => {
-                            console.log("lastdata: ", lastdata);
-                            console.log("chattee data by id: ", data);
-                            console.log("chatid: ", chatId);
-                            io.to(socketIdOfChatee)
-                                .to(socketIdOfChater)
-                                .emit("showPrivateChat", data[0], lastdata);
-                        });
+                        data[0].chatId = chatId[0].id;
+                        db.getLastTenPrivateChatMessages(chatId[0].id).then(
+                            lastdata => {
+                                console.log("lastdata: ", lastdata);
+                                console.log("chattee data by id: ", data);
+                                console.log("chatid: ", chatId);
+                                io.to(socketIdOfChatee)
+                                    .to(socketIdOfChater)
+                                    .emit(
+                                        "showPrivateChat",
+                                        data[0],
+                                        lastdata.reverse()
+                                    );
+                            }
+                        );
                     })
                     .catch(err =>
                         console.log(
@@ -324,8 +328,41 @@ io.on("connection", function(socket) {
                             err
                         )
                     );
-            })
-            .catch(err => console.log("err private overview upsert: ", err));
+            } else {
+                db.addChatOverviewUpsert(userId, id)
+                    .then(chatId => {
+                        db.getUsersById(id)
+                            .then(data => {
+                                data[0].chatter = userId;
+                                data[0].chattee = id;
+                                data[0].chatId = chatId.rows[0].id;
+                                db.getLastTenPrivateChatMessages(
+                                    chatId.rows[0].id
+                                ).then(lastdata => {
+                                    console.log("lastdata: ", lastdata);
+                                    console.log("chattee data by id: ", data);
+                                    console.log("chatid: ", chatId);
+                                    io.to(socketIdOfChatee)
+                                        .to(socketIdOfChater)
+                                        .emit(
+                                            "showPrivateChat",
+                                            data[0],
+                                            lastdata
+                                        );
+                                });
+                            })
+                            .catch(err =>
+                                console.log(
+                                    "err private overview get users by id: ",
+                                    err
+                                )
+                            );
+                    })
+                    .catch(err =>
+                        console.log("err private overview upsert: ", err)
+                    );
+            }
+        });
 
         // io.to(onlineUsers[socket.id]).emit("private message", info); //something like that later
     });
@@ -335,24 +372,23 @@ io.on("connection", function(socket) {
         // io.sockets.emit("private message", msg);
         console.log("userId, msg, chatId: ", userId, msg, chatId);
         db.addPrivateChatMessage(userId, msg, chatId).then(() => {
-            var messageInfo = [
-                {
-                    user_id: userId,
-                    message: msg,
-                    first: "testname",
-                    chat_overview_id: chatId
-                }
-            ];
-            // data[0].message = msg;
-            // data[0].sender_id = userId;
-            // data[0].chatId = chatId;
-
-            console.log("socketIdOfChatee: ", socketIdOfChatee);
-            console.log("socketIdOfChater: ", socketIdOfChater);
-            io.to(socketIdOfChatee)
-                .to(socketIdOfChater)
-                .emit("add private message", messageInfo);
-            // io.to(onlineUsers[socket.id]).emit("private message", info); //something like that later
+            db.getUsersById(userId).then(data => {
+                data[0].message = msg;
+                data[0].user_id = userId;
+                console.log("socketIdOfChatee: ", socketIdOfChatee);
+                console.log("socketIdOfChater: ", socketIdOfChater);
+                io.to(socketIdOfChatee)
+                    .to(socketIdOfChater)
+                    .emit("add private message", data);
+            });
+            // var messageInfo = [
+            //     {
+            //         user_id: userId,
+            //         message: msg,
+            //         first: "testname",
+            //         chat_overview_id: chatId
+            //     }
+            // ];
         });
     });
 });

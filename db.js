@@ -82,6 +82,18 @@ exports.getUserDataByArray = function(array) {
         });
 };
 
+exports.checkIfConversationExists = function(chatter1_id, chatter2_id) {
+    return db
+        .query(
+            `
+    SELECT id FROM private_chats_overview WHERE (chatter1_id = $1 AND chatter2_id = $2) OR (chatter1_id = $2 AND chatter2_id = $1);`,
+            [chatter1_id, chatter2_id]
+        )
+        .then(({ rows }) => {
+            return rows;
+        });
+};
+
 exports.addChatOverviewUpsert = function(chatter1_id, chatter2_id) {
     return db.query(
         `INSERT INTO private_chats_overview(chatter1_id, chatter2_id) VALUES ($1, $2) ON CONFLICT (chatter1_id, chatter2_id) DO UPDATE SET last_updated_at = now() RETURNING id;`,

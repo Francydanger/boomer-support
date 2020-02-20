@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 export default function Header(props) {
     console.log("props in header: ", props);
     const users = useSelector(state => state && state.users);
-    const privateChatIsVisible = useSelector(
-        state => state.privateChatIsVisible
-    );
+
     return (
         <div className="header">
             <h3 className="header-heading">
@@ -19,18 +17,13 @@ export default function Header(props) {
                 </Link>
             </button>
             <button className="button" name="button">
-                <Link className="link" to="/home">
+                <Link className="link" to="/videos">
                     Videos
                 </Link>
             </button>
             <button className="button" name="button">
-                <Link className="link" to="/home">
-                    Rules
-                </Link>
-            </button>
-            <button className="button" name="button">
                 <Link className="link" to="/chat">
-                    Chat /Get Help
+                    Public Chat
                 </Link>
             </button>
             <button className="button" name="button">

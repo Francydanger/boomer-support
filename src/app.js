@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 // import OtherProfile from "./other-profile";
 import Header from "./header";
+import Videos from "./videos";
 // import Footer from "./footer";
 // import FindPeople from "./findpeople";
 // import Friends from "./friends";
@@ -34,17 +35,14 @@ export default function App() {
             <BrowserRouter>
                 <Header />
                 <Route path="/home" component={Home} />
-                <div className="millenial">
-                    I am the millenial div
-                    <div>
-                        <Route exact path="/chat" render={() => <Chat />} />
-                        <Route
-                            exact
-                            path="/private-chat"
-                            render={() => <PrivateChat />}
-                        />
-                    </div>
-                </div>
+                <Route path="/videos" component={Videos} />
+
+                <Route exact path="/chat" render={() => <Chat />} />
+                <Route
+                    exact
+                    path="/private-chat"
+                    render={() => <PrivateChat />}
+                />
             </BrowserRouter>
         );
     } else if (users && users.category == "boomer") {
@@ -53,18 +51,14 @@ export default function App() {
             <BrowserRouter>
                 <Header />
                 <Route path="/home" component={Home} />
-                <div>Hello I am the app and i am alive</div>
-                <div className="boomer">
-                    I am the boomer div
-                    <div>
-                        <Route exact path="/chat" render={() => <Chat />} />
-                        <Route
-                            exact
-                            path="/private-chat"
-                            render={() => <PrivateChat />}
-                        />
-                    </div>
-                </div>
+                <Route path="/videos" component={Videos} />
+                <Route exact path="/chat" render={() => <Chat />} />
+                <Route
+                    exact
+                    path="/private-chat"
+                    render={() => <PrivateChat />}
+                />
+
                 {/* <Header
                 first={this.state.first}
                 last={this.state.last}

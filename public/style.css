@@ -13,11 +13,40 @@
     font-size: 1.2em;
 }
 
+.flexcenter {
+    display: flex;
+    justify-content: center;
+}
+/* .flexcentercolumn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+} */
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    text-align: center;
+}
+
 input,
 textarea,
 button {
     font-family: inherit;
     background-color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+::placeholder {
+    color: blue;
+    opacity: 0.6;
 }
 
 .small-image {
@@ -56,12 +85,16 @@ button {
     font-size: 1.2em;
     color: lightgrey;
     font-weight: bolder;
-    border-radius: 15px;
+    border-radius: 30px;
     border-color: lightgrey;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
+}
+.button:hover {
+    filter: invert(1);
 }
 
 .link {
@@ -103,6 +136,11 @@ button {
     border: 3px solid yellow;
 }
 
+/* .chat-container {
+    overflow-y: scroll;
+    height: 80vh;
+} */
+
 /* https://leaverou.github.io/bubbly/ */
 .speech-bubble {
     position: relative;
@@ -124,7 +162,128 @@ button {
     margin-left: -31px;
     margin-top: -62px;
 }
+
+.component {
+    padding: 15px;
+    margin-top: 30px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+}
+
+.chat-bubble-left {
+    position: relative;
+    background: #8000ff;
+    border-radius: 0.4em;
+    padding: 10px;
+    color: pink;
+    box-shadow: 4px 4px 4px #999;
+}
+.chat-bubble-left:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 27px solid transparent;
+    border-right-color: #8000ff;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -13.5px;
+    margin-left: -27px;
+}
+
+.chat-bubble-right {
+    position: relative;
+    background: #8000ff;
+    border-radius: 0.4em;
+    padding: 10px;
+    color: pink;
+    box-shadow: 4px 4px 4px #999;
+}
+
+.chat-bubble-right:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 27px solid transparent;
+    border-left-color: #8000ff;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -13.5px;
+    margin-right: -27px;
+}
+.chat-container-right {
+    display: flex;
+    justify-content: flex-end;
+    margin: 9px;
+}
+.chat-container-left {
+    display: flex;
+    justify-content: flex-start;
+    margin: 9px;
+}
+.messenger-name-right {
+    margin-left: 70px;
+    color: #8000ff;
+
+    padding: 10px;
+    border: 3px solid #8000ff;
+    border-radius: 50%;
+    font-weight: bolder;
+    line-height: 2;
+    box-shadow: 4px 4px 4px #999;
+}
+
+.messenger-name-right:hover {
+    filter: invert(1);
+}
+.messenger-name-left {
+    margin-right: 70px;
+    color: #8000ff;
+    padding: 10px;
+    border: 3px solid #8000ff;
+    border-radius: 50%;
+    font-weight: bolder;
+    line-height: 2;
+    box-shadow: 4px 4px 4px #999;
+}
+.join-conv {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    color: blue;
+}
 .textarea {
-    width: 400px;
-    border: 3px;
+    width: 80vw;
+    height: 100px;
+    border: 3px solid blue;
+    border-color: blue;
+    box-shadow: 4px 4px 4px #999;
+    border-radius: 0.4em;
+    font-size: 1.2em;
+    color: inherit;
+}
+.online-users-buttons-container {
+    display: flex;
+}
+
+.heading-and-x {
+    display: flex;
+    justify-content: space-between !important;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    justify-items: center;
 }

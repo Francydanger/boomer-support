@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 export function PrivateChat() {
     const loggedInId = useSelector(state => state && state.loggedInId);
     console.log("loggedInId: ", loggedInId);
-    const chatMessages = useSelector(state => state && state.chatMessages);
-    console.log("chatmessages: ", chatMessages);
     const onlineUsers = useSelector(state => state && state.onlineUsers);
     console.log("onlineUsers: ", onlineUsers);
     const users = useSelector(state => state && state.users);
@@ -37,7 +35,7 @@ export function PrivateChat() {
         // console.log("scrollheight:", elemRef.current.scrollHeight);
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight; // seems perfect for destructuring.
-    }, [chatMessages, privateChattee]);
+    }, [privateChattee]);
 
     //tipps: two things we want to emt from server: last 10 chat messages, and when user tpes something , send the text (we know id of user who send message, so with new query we can show who is the sender - late rsend it to frot end, to socket -actions just gives t reducer . reducer does different things depending on soe things)
 
@@ -48,8 +46,6 @@ export function PrivateChat() {
         if (e.key === "Enter") {
             e.preventDefault(); //stops the annoying moving to a new line even after text has been set to empty string.
             console.log("after enter what user has typed: ", e.target.value);
-            //test-emit from class
-            // socket.emit("my amazing chat message: ", e.target.value);
             socket.emit(
                 "privateChatMessage",
                 e.target.value,
@@ -69,22 +65,27 @@ export function PrivateChat() {
     };
 
     return (
-        <div className="private-chat-component speech-bubble" ref={elemRef}>
-            <h1>Hello from private chat between user1 and user2</h1>
+        <div className="component speech-bubble" ref={elemRef}>
+            <h1>Private Chat</h1>
             <h2>Start private chat with:</h2>
-            {onlineUsers &&
-                onlineUsers.map(user => {
-                    return (
-                        <button
-                            key={user.id}
-                            onClick={() => handleClick(user.id)}
-                        >
-                            <div className="footer-users">
-                                <p>{`${user.first} ${user.last}`}</p>
+            <div className="online-users-buttons-container">
+                {onlineUsers &&
+                    onlineUsers.map(user => {
+                        return (
+                            <div key={user.id}>
+                                {user.id !== loggedInId && (
+                                    <button
+                                        onClick={() => handleClick(user.id)}
+                                    >
+                                        <div className="footer-users">
+                                            <p>{`${user.first} ${user.last}`}</p>
+                                        </div>
+                                    </button>
+                                )}
                             </div>
-                        </button>
-                    );
-                })}
+                        );
+                    })}
+            </div>
 
             {privateChatIsVisible && (
                 <div className="private-chat-container">
@@ -114,7 +115,7 @@ export function PrivateChat() {
                             );
                         })}
 
-                    <h2>Write a message to (other chat user):</h2>
+                    <h2>Write a message:</h2>
                     <div className="textarea-container">
                         <textarea
                             placeholder="Add your private message here and hit enter to submit it"
@@ -123,7 +124,9 @@ export function PrivateChat() {
                         ></textarea>
                     </div>
 
-                    <h2>ckick this button to start the teamviewer session</h2>
+                    <h2>
+                        Please click this button to start the TeamViewer Session
+                    </h2>
                     <h1>
                         <a href="https://get.teamviewer.com/6xe5sd6">
                             hier starten

@@ -42,61 +42,65 @@ export function Chat() {
     };
 
     return (
-        <div className="chat-component">
-            <h1> Chatroom</h1>
+        <div className="component speech-bubble">
+            <div className="heading-and-x">
+                <h1>Public Chat</h1>
+                <Link to="/home">
+                    <h1 className="x">x</h1>
+                </Link>
+            </div>
+
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages.map(msg => {
                         return (
-                            <ul key={msg.id}>
+                            <div key={msg.id}>
                                 {msg.user_id === loggedInId ? (
-                                    <Link
-                                        className="link"
-                                        to={`/user/${msg.user_id}`}
-                                    >
-                                        <div className="chat-message-container-loggedin">
-                                            <p className="wrap">
-                                                {msg.first}: {msg.message}
-                                            </p>
+                                    <div className="chat-container-right">
+                                        <div className="chat-bubble-right">
+                                            <p>{msg.message}</p>
                                         </div>
-                                    </Link>
-                                ) : (
-                                    <div className="chat-message-container">
-                                        <p className="wrap">
-                                            {msg.first}: {msg.message}
+                                        <p className="messenger-name-right">
+                                            {msg.first}
                                         </p>
                                     </div>
+                                ) : (
+                                    <div className="chat-container-left">
+                                        <p className="messenger-name-left">
+                                            {msg.first}
+                                        </p>
+                                        <div className="chat-bubble-left">
+                                            <p>{msg.message}</p>
+                                        </div>
+                                    </div>
                                 )}
-                            </ul>
+                            </div>
                         );
                     })}
             </div>
-            <h2>Integrate yourself into the conversation:</h2>
-            <div className="textarea-container">
-                <textarea
-                    placeholder="Add your message here and hit enter to submit it"
-                    onKeyDown={keyCheck}
-                    className="textarea"
-                ></textarea>
+            <div className="join-conv">
+                <h2>Join the conversation:</h2>
+                <div className="textarea-container">
+                    <textarea
+                        placeholder="Add your message here and hit enter to submit it"
+                        onKeyDown={keyCheck}
+                        className="textarea"
+                    ></textarea>
+                </div>
             </div>
-
             <h2>Online at the moment:</h2>
-            {onlineUsers &&
-                onlineUsers.map(user => {
-                    return (
-                        <div key={user.id}>
-                            <Link className="link" to="/chats">
-                                <div className="footer-users">
+            <div className="flexcenter">
+                {onlineUsers &&
+                    onlineUsers.map(user => {
+                        return (
+                            <div key={user.id}>
+                                <Link className="link" to="/private-chat">
                                     <p>{`${user.first} ${user.last}`}</p>
-                                    <img
-                                        className="profilepic-footer"
-                                        src={user.profilepic}
-                                    />
-                                </div>
-                            </Link>
-                        </div>
-                    );
-                })}
+                                </Link>
+                            </div>
+                        );
+                    })}
+            </div>
         </div>
     );
 }
