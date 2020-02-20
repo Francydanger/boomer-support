@@ -215,7 +215,11 @@ app.get("/welcome", function(req, res) {
 // });
 
 app.get("*", function(req, res) {
-    res.sendFile(__dirname + "/index.html");
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 server.listen(8080, function() {
@@ -225,6 +229,7 @@ server.listen(8080, function() {
 ////SOCKET SERVER////
 
 let onlineUsers = {};
+let socketListForPrivateChat = {};
 io.on("connection", function(socket) {
     console.log(socket.request.session);
     if (!socket.request.session.userId) {
@@ -237,7 +242,10 @@ io.on("connection", function(socket) {
         `socket with the id ${socket.id} is now connected to the userId: ${userId}`
     );
     onlineUsers[socket.id] = userId;
+    socketListForPrivateChat[userId] = socket.id;
     console.log("OnlineUsers: ", onlineUsers);
+    console.log("socketListForPrivateChat: ", socketListForPrivateChat);
+
     socket.on("disconnect", function() {
         console.log(
             `socket with the id ${socket.id} is now disconnected with userId: ${userId} `
@@ -271,13 +279,79 @@ io.on("connection", function(socket) {
             db.getUsersById(userId).then(data => {
                 data[0].message = msg;
                 data[0].user_id = userId;
-                data[0].id = chatData.rows[0].id; //this gives each message th chat id
+                data[0].id = chatData.rows[0].id;
+
                 console.log(
                     "Data from getuser id within socket on chatmessage",
                     data
                 );
                 io.sockets.emit("get one Message from back to front", data);
             });
+        });
+    });
+
+    var socketIdOfChatee;
+    var socketIdOfChater;
+    socket.on("showPrivateChat", id => {
+        console.log("INFO: ", id);
+        console.log(
+            "socketListForPrivateChat.id: ",
+            socketListForPrivateChat[id]
+        );
+        socketIdOfChatee = socketListForPrivateChat[id];
+        socketIdOfChater = socketListForPrivateChat[userId];
+        db.addChatOverviewUpsert(userId, id)
+            .then(chatId => {
+                db.getUsersById(id)
+                    .then(data => {
+                        data[0].chatter = userId;
+                        data[0].chattee = id;
+                        data[0].chatId = chatId.rows[0].id;
+                        db.getLastTenPrivateChatMessages(
+                            chatId.rows[0].id
+                        ).then(lastdata => {
+                            console.log("lastdata: ", lastdata);
+                            console.log("chattee data by id: ", data);
+                            console.log("chatid: ", chatId);
+                            io.to(socketIdOfChatee)
+                                .to(socketIdOfChater)
+                                .emit("showPrivateChat", data[0], lastdata);
+                        });
+                    })
+                    .catch(err =>
+                        console.log(
+                            "err private overview get users by id: ",
+                            err
+                        )
+                    );
+            })
+            .catch(err => console.log("err private overview upsert: ", err));
+
+        // io.to(onlineUsers[socket.id]).emit("private message", info); //something like that later
+    });
+
+    socket.on("privateChatMessage", (msg, chatId) => {
+        console.log("private message: ", msg, chatId);
+        // io.sockets.emit("private message", msg);
+        console.log("userId, msg, chatId: ", userId, msg, chatId);
+        db.addPrivateChatMessage(userId, msg, chatId).then(() => {
+            var messageInfo = [
+                {
+                    userId: userId,
+                    msg: msg,
+                    chatId: chatId
+                }
+            ];
+            // data[0].message = msg;
+            // data[0].sender_id = userId;
+            // data[0].chatId = chatId;
+
+            console.log("socketIdOfChatee: ", socketIdOfChatee);
+            console.log("socketIdOfChater: ", socketIdOfChater);
+            io.to(socketIdOfChatee)
+                .to(socketIdOfChater)
+                .emit("add private message", messageInfo);
+            // io.to(onlineUsers[socket.id]).emit("private message", info); //something like that later
         });
     });
 });

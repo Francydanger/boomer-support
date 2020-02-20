@@ -1,5 +1,23 @@
 * {
-    background-color: blue;
+    box-sizing: border-box;
+    /* background-color: midnightblue; */
+}
+
+.millenial {
+    background-color: darkgreen;
+    font-family: "PT Sans", sans-serif;
+}
+.boomer {
+    background-color: midnightblue;
+    font-family: "Comic Sans MS", sans-serif;
+    font-size: 1.2em;
+}
+
+input,
+textarea,
+button {
+    font-family: inherit;
+    background-color: inherit;
 }
 
 .small-image {
@@ -53,8 +71,60 @@
 }
 
 .millenial {
-    background-color: green;
+    background-color: darkgreen;
+    font-family: "PT Sans", sans-serif;
 }
 .boomer {
-    background-color: pink;
+    background-color: midnightblue;
+    font-family: "Comic Sans MS", sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    color: lightgrey;
+    padding: 15px;
+}
+.header-heading {
+    padding: 15px;
+}
+
+/* .private-chat-component {
+    border: 3px solid blue;
+} */
+
+.private-chat-container-visible {
+    visibility: visible;
+}
+
+.private-chat-container {
+    border: 3px solid yellow;
+}
+
+/* https://leaverou.github.io/bubbly/ */
+.speech-bubble {
+    position: relative;
+    background: pink;
+    border-radius: 0.4em;
+}
+
+.speech-bubble:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 62px solid transparent;
+    border-bottom-color: pink;
+    border-top: 0;
+    border-left: 0;
+    margin-left: -31px;
+    margin-top: -62px;
+}
+.textarea {
+    width: 400px;
+    border: 3px;
 }

@@ -58,6 +58,22 @@ export async function addChatMessage(message) {
     };
 }
 
+export async function getPrivateChatMessages(messages) {
+    console.log("messages in get privatchatmessages actions:", messages);
+    return {
+        type: "GET_PRIVATE_CHAT_MESSAGES",
+        privateChatMessages: messages
+    };
+}
+
+export async function addPrivateChatMessage(message) {
+    console.log("message in addPRIVATEchatmessage actions:", message);
+    return {
+        type: "ADD_PRIVATE_CHAT_MESSAGE",
+        privateChatMessage: message
+    };
+}
+
 export async function showDataOfOnlineUsers(userdata) {
     console.log("message in addchatmessage actions:", userdata);
     return {
@@ -71,5 +87,13 @@ export async function showLoggedInUser(loggedInId) {
     return {
         type: "SHOW_LOG_ID",
         loggedInId: loggedInId
+    };
+}
+
+export async function showPrivateChat(chattee_data, lastdata) {
+    return {
+        type: "SHOW_PRIVATE_CHAT",
+        chattee_data: chattee_data,
+        privateChatMessages: lastdata
     };
 }

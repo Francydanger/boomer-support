@@ -8,7 +8,9 @@ export function Chat() {
     console.log("loggedInId: ", loggedInId);
     const chatMessages = useSelector(state => state && state.chatMessages);
     console.log("chatmessages: ", chatMessages);
-
+    const onlineUsers = useSelector(state => state && state.onlineUsers);
+    console.log("onlineUsers: ", onlineUsers);
+    const users = useSelector(state => state && state.users);
     const elemRef = useRef();
     console.log("elemRef:", elemRef);
     useEffect(() => {
@@ -77,6 +79,24 @@ export function Chat() {
                     className="textarea"
                 ></textarea>
             </div>
+
+            <h2>Online at the moment:</h2>
+            {onlineUsers &&
+                onlineUsers.map(user => {
+                    return (
+                        <div key={user.id}>
+                            <Link className="link" to="/chats">
+                                <div className="footer-users">
+                                    <p>{`${user.first} ${user.last}`}</p>
+                                    <img
+                                        className="profilepic-footer"
+                                        src={user.profilepic}
+                                    />
+                                </div>
+                            </Link>
+                        </div>
+                    );
+                })}
         </div>
     );
 }

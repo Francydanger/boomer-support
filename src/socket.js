@@ -3,7 +3,10 @@ import {
     addChatMessage,
     getChatMessages,
     showDataOfOnlineUsers,
-    showLoggedInUser
+    showLoggedInUser,
+    getPrivateChatMessages,
+    showPrivateChat,
+    addPrivateChatMessage
 } from "./actions";
 
 export let socket;
@@ -29,6 +32,16 @@ export const init = store => {
         );
         socket.on("LoggedInId", LoggedInId =>
             store.dispatch(showLoggedInUser(LoggedInId))
+        );
+        socket.on("get ten private messages", data =>
+            store.dispatch(getPrivateChatMessages(data))
+        );
+        socket.on("add private message", data =>
+            store.dispatch(addPrivateChatMessage(data))
+        );
+
+        socket.on("showPrivateChat", (data, lastdata) =>
+            store.dispatch(showPrivateChat(data, lastdata))
         );
     }
 };

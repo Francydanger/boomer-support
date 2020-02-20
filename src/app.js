@@ -5,12 +5,13 @@ import React, { useState, useEffect } from "react";
 // import Profile from "./profile";
 import { BrowserRouter, Route } from "react-router-dom";
 // import OtherProfile from "./other-profile";
-// import Header from "./header";
+import Header from "./header";
 // import Footer from "./footer";
 // import FindPeople from "./findpeople";
 // import Friends from "./friends";
 import { Chat } from "./chat";
-// import Home from "./home";
+import { PrivateChat } from "./private-chat";
+import Home from "./home";
 import { useDispatch, useSelector } from "react-redux";
 import { putUserInfoInRedux } from "./actions";
 
@@ -23,26 +24,47 @@ export default function App() {
         dispatch(putUserInfoInRedux());
     }, []);
 
-    // if (!this.state.id) {
-    //     return "Loading"; //or progressbar.gif or something - this works because render runs again as soon as a state change happens!
-    // }
+    if (!users) {
+        return "Loading"; //or progressbar.gif or something - this works because render runs again as soon as a state change happens!
+    }
 
     if (users && users.category == "millenial") {
+        document.body.classList.add("millenial");
         return (
             <BrowserRouter>
+                <Header />
+                <Route path="/home" component={Home} />
                 <div className="millenial">
                     I am the millenial div
                     <div>
                         <Route exact path="/chat" render={() => <Chat />} />
+                        <Route
+                            exact
+                            path="/private-chat"
+                            render={() => <PrivateChat />}
+                        />
                     </div>
                 </div>
             </BrowserRouter>
         );
     } else if (users && users.category == "boomer") {
+        document.body.classList.add("boomer");
         return (
             <BrowserRouter>
+                <Header />
+                <Route path="/home" component={Home} />
                 <div>Hello I am the app and i am alive</div>
-                <div className="boomer">I am the boomer div</div>
+                <div className="boomer">
+                    I am the boomer div
+                    <div>
+                        <Route exact path="/chat" render={() => <Chat />} />
+                        <Route
+                            exact
+                            path="/private-chat"
+                            render={() => <PrivateChat />}
+                        />
+                    </div>
+                </div>
                 {/* <Header
                 first={this.state.first}
                 last={this.state.last}

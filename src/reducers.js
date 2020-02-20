@@ -1,4 +1,7 @@
-export default function reducer(state = {}, action) {
+export default function reducer(
+    state = { privateChatIsVisible: false },
+    action
+) {
     //this is going to be one big function with a bunch of if sttements in it:
     // if (action.type == "ALL_CAPS_WITH_UNDERSCORES") {
     //     //make copy of gloabl state, immuably change objects and so on
@@ -61,6 +64,33 @@ export default function reducer(state = {}, action) {
                     return person.id !== action.id; //this syntax comes from stack overflow, i dont really understand why this works
                 }
             })
+        };
+    }
+    if (action.type === "GET_PRIVATE_CHAT_MESSAGES") {
+        console.log("GET_PRIVATE_CHAT_MESSAGES", action);
+        state = {
+            ...state,
+            privateChatMessages: action.privateChatMessages
+        };
+    }
+
+    if (action.type === "ADD_PRIVATE_CHAT_MESSAGE") {
+        console.log("ADD_PRIVATE_CHAT_MESSAGE", action);
+        state = {
+            ...state,
+            privateChatMessages: [
+                ...state.privateChatMessages,
+                action.privateChatMessage[0]
+            ]
+        };
+    }
+
+    if (action.type == "SHOW_PRIVATE_CHAT") {
+        return {
+            ...state,
+            chattee_data: action.chattee_data,
+            privateChatIsVisible: true,
+            privateChatMessages: action.privateChatMessages
         };
     }
 

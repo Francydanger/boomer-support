@@ -46,7 +46,7 @@ exports.updatePassword = function(password, email) {
 exports.getUsersById = function(id) {
     return db
         .query(
-            `SELECT first, last, email, category  FROM users WHERE id = $1;`,
+            `SELECT first, last, email, category, id  FROM users WHERE id = $1;`,
             [id]
         )
         .then(({ rows }) => {
@@ -74,8 +74,34 @@ exports.addChatMessages = function(sender_id, message) {
 exports.getUserDataByArray = function(array) {
     return db
         .query(
-            `SELECT first, last, email, category FROM users WHERE id = ANY($1)`,
+            `SELECT first, last, email, category, id FROM users WHERE id = ANY($1)`,
             [array]
+        )
+        .then(({ rows }) => {
+            return rows;
+        });
+};
+
+exports.addChatOverviewUpsert = function(chatter1_id, chatter2_id) {
+    return db.query(
+        `INSERT INTO private_chats_overview(chatter1_id, chatter2_id) VALUES ($1, $2) ON CONFLICT (chatter1_id, chatter2_id) DO UPDATE SET last_updated_at = now() RETURNING id;`,
+        [chatter1_id, chatter2_id]
+    );
+};
+
+exports.addPrivateChatMessage = function(sender_id, message, chat_overview_id) {
+    return db.query(
+        `INSERT INTO private_chats (sender_id, message, chat_overview_id) VALUES ($1, $2, $3) RETURNING id;`,
+        [sender_id, message, chat_overview_id]
+    );
+};
+
+exports.getLastTenPrivateChatMessages = function(chat_overview_id) {
+    return db
+        .query(
+            `SELECT sender_id, message, chat_overview_id, private_chats.id, users.id as user_id, first, last, category, chatter1_id, chatter2_id FROM users JOIN private_chats ON users.id = private_chats.sender_id
+            JOIN private_chats_overview ON chat_overview_id = private_chats_overview.id WHERE chat_overview_id = $1 ORDER BY id DESC LIMIT 10;`,
+            [chat_overview_id]
         )
         .then(({ rows }) => {
             return rows;
