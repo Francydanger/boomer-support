@@ -94,9 +94,9 @@ export function PrivateChat() {
                         {privateChattee && <p>{privateChattee.first}</p>}
                     </h2>
                     {privateChatMessages &&
-                        privateChatMessages.map(msg => {
+                        privateChatMessages.map((msg, index) => {
                             return (
-                                <ul key={msg.id}>
+                                <ul key={index}>
                                     {msg.user_id === loggedInId ? (
                                         <div className="chat-message-container-loggedin">
                                             <p className="wrap">

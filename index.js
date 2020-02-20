@@ -337,9 +337,10 @@ io.on("connection", function(socket) {
         db.addPrivateChatMessage(userId, msg, chatId).then(() => {
             var messageInfo = [
                 {
-                    userId: userId,
-                    msg: msg,
-                    chatId: chatId
+                    user_id: userId,
+                    message: msg,
+                    first: "testname",
+                    chat_overview_id: chatId
                 }
             ];
             // data[0].message = msg;

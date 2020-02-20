@@ -66,13 +66,13 @@ export default function reducer(
             })
         };
     }
-    if (action.type === "GET_PRIVATE_CHAT_MESSAGES") {
-        console.log("GET_PRIVATE_CHAT_MESSAGES", action);
-        state = {
-            ...state,
-            privateChatMessages: action.privateChatMessages
-        };
-    }
+    // if (action.type === "GET_PRIVATE_CHAT_MESSAGES") {
+    //     console.log("GET_PRIVATE_CHAT_MESSAGES", action);
+    //     state = {
+    //         ...state,
+    //         privateChatMessages: action.privateChatMessages
+    //     };
+    // }
 
     if (action.type === "ADD_PRIVATE_CHAT_MESSAGE") {
         console.log("ADD_PRIVATE_CHAT_MESSAGE", action);
@@ -82,6 +82,13 @@ export default function reducer(
                 ...state.privateChatMessages,
                 action.privateChatMessage[0]
             ]
+        };
+    }
+    if (action.type === "ADD_CHAT_MESSAGE") {
+        console.log("ADD_CHAT_MESSAGE", action);
+        state = {
+            ...state,
+            chatMessages: [...state.chatMessages, action.chatMessage[0]]
         };
     }
 
@@ -99,13 +106,6 @@ export default function reducer(
         state = {
             ...state,
             chatMessages: action.chatMessages
-        };
-    }
-    if (action.type === "ADD_CHAT_MESSAGE") {
-        console.log("ADD_CHAT_MESSAGE", action);
-        state = {
-            ...state,
-            chatMessages: [...state.chatMessages, action.chatMessage[0]]
         };
     }
 
