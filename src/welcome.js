@@ -8,18 +8,20 @@ export default function Welcome() {
     console.log("hello from new welcome");
 
     return (
-        <div>
+        <div className="welcome-style">
             <HashRouter>
                 <div>
                     <div className="center">
-                        <h1>Final project here i come</h1>
-                        <h2>
+                        <br></br>
+                        <br></br>
+
+                        <h1>
                             Welcome to the support page that will change you
                             life
-                        </h2>
+                        </h1>
 
                         <img
-                            className="small-image"
+                            className="welcome-gif"
                             src="https://media.giphy.com/media/de5bARu0SsXiU/giphy.gif"
                         ></img>
                     </div>

@@ -82,6 +82,7 @@ export default class Registration extends React.Component {
                         >
                             <option value="boomer">Boomer</option>
                             <option value="millenial">Millenial</option>
+                            <option value="genx">Gen-X</option>
                         </select>
                     </div>
                     <input

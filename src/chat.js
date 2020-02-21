@@ -42,14 +42,14 @@ export function Chat() {
     };
 
     return (
-        <div className="component speech-bubble">
+        <div className="component speech-bubble-chat">
             <div className="heading-and-x">
                 <h1>Public Chat</h1>
                 <Link to="/home">
                     <h1 className="x">x</h1>
                 </Link>
             </div>
-
+            <br></br>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages.map(msg => {
@@ -88,12 +88,12 @@ export function Chat() {
                     ></textarea>
                 </div>
             </div>
-            <h2>Online at the moment:</h2>
+            <h2 className="center">Online at the moment:</h2>
             <div className="flexcenter">
                 {onlineUsers &&
                     onlineUsers.map(user => {
                         return (
-                            <div key={user.id}>
+                            <div className="padding25" key={user.id}>
                                 <Link className="link" to="/private-chat">
                                     <p>{`${user.first} ${user.last}`}</p>
                                 </Link>

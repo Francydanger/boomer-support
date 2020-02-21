@@ -7,15 +7,33 @@ import { BrowserRouter, Route } from "react-router-dom";
 export default function Videos() {
     // const onlineUsers = useSelector(state => state && state.onlineUsers);
     // console.log("onlineUsers: ", onlineUsers);
-
+    const users = useSelector(state => state && state.users);
     return (
-        <div className="component speech-bubble">
+        <div className="component speech-bubble-videos">
             <div className="heading-and-x">
-                <h1>Welcome to the intergenerational support page</h1>
+                <h1>Videos</h1>
                 <Link to="/home">
                     <h1 className="x">x</h1>
                 </Link>
             </div>
+
+            {users.category === "millenial" && (
+                <div className="upload-container">
+                    <h2>Upload Video:</h2>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <input type="text" name="title" placeholder="Title" />
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Your Username"
+                    />
+                    <input type="file" name="file" accept="image/*" />
+                    <button className="button">Submit</button>
+                </div>
+            )}
+
             <div className="video-container">
                 <div className="single-video-container">
                     <h3>How to start a TeamViewer Session</h3>
@@ -84,22 +102,6 @@ export default function Videos() {
                     />
                 </div>
             </div>
-            {/* {onlineUsers &&
-                onlineUsers.map(user => {
-                    return (
-                        <li key={user.id}>
-                            <Link className="link" to="/chats">
-                                <div className="footer-users">
-                                    <p>{`${user.first} ${user.last}`}</p>
-                                    <img
-                                        className="profilepic-footer"
-                                        src={user.profilepic}
-                                    />
-                                </div>
-                            </Link>
-                        </li>
-                    );
-                })} */}
         </div>
     );
 }

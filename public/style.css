@@ -1,14 +1,21 @@
 * {
     box-sizing: border-box;
-    /* background-color: midnightblue; */
+    margin: 0;
+}
+
+.welcome-style {
+    background-color: #db9876;
+    min-height: 100vh;
+    color: #26757e;
+    font-family: "Comic Sans MS";
 }
 
 .millenial {
-    background-color: darkgreen;
+    background-color: #26757e;
     font-family: "PT Sans", sans-serif;
 }
 .boomer {
-    background-color: midnightblue;
+    background-color: #db9876;
     font-family: "Comic Sans MS", sans-serif;
     font-size: 1.2em;
 }
@@ -45,12 +52,22 @@ button {
 }
 
 ::placeholder {
-    color: blue;
+    color: #26757e;
     opacity: 0.6;
 }
 
 .small-image {
     height: 200px;
+}
+.welcome-gif {
+    height: 300px;
+    margin: 30px;
+}
+
+select {
+    background-color: inherit;
+    border: 3px solid #26757e;
+    color: #26757e;
 }
 
 .container {
@@ -66,6 +83,8 @@ button {
     margin: 20px;
     font-size: 1.2em;
     font-weight: bolder;
+    border: 3px solid #26757e;
+    color: #26757e;
 }
 
 .center {
@@ -74,6 +93,7 @@ button {
     align-items: center;
     flex-direction: column;
 }
+
 .select {
     width: 200px;
     height: 30px;
@@ -83,43 +103,48 @@ button {
 }
 .button {
     font-size: 1.2em;
-    color: lightgrey;
+    color: #26757e;
     font-weight: bolder;
     border-radius: 30px;
-    border-color: lightgrey;
+
+    border: 3px solid #26757e;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
+    box-shadow: 4px 4px 4px #999;
 }
 .button:hover {
-    filter: invert(1);
+    transform: scale(1.1);
 }
 
+.buttonmil {
+    color: #db9876;
+    border: 3px solid #db9876;
+}
 .link {
     text-decoration: none;
-    color: lightgrey;
+    color: #26757e;
     font-weight: bolder;
 }
 
-.millenial {
-    background-color: darkgreen;
-    font-family: "PT Sans", sans-serif;
-}
-.boomer {
-    background-color: midnightblue;
-    font-family: "Comic Sans MS", sans-serif;
+.link:hover {
+    transform: scale(1.1);
 }
 
+.linkmil {
+    color: #db9876;
+}
 .header {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    color: lightgrey;
+    color: #26757e;
     padding: 15px;
 }
+
 .header-heading {
     padding: 15px;
 }
@@ -132,9 +157,9 @@ button {
     visibility: visible;
 }
 
-.private-chat-container {
+/* .private-chat-container {
     border: 3px solid yellow;
-}
+} */
 
 /* .chat-container {
     overflow-y: scroll;
@@ -144,7 +169,7 @@ button {
 /* https://leaverou.github.io/bubbly/ */
 .speech-bubble {
     position: relative;
-    background: pink;
+    background: #f4e5ea;
     border-radius: 0.4em;
 }
 
@@ -156,16 +181,104 @@ button {
     width: 0;
     height: 0;
     border: 62px solid transparent;
-    border-bottom-color: pink;
+    border-bottom-color: #f4e5ea;
     border-top: 0;
     border-left: 0;
     margin-left: -31px;
     margin-top: -62px;
 }
 
+.speech-bubble-home {
+    position: relative;
+    background: #f4e5ea;
+    border-radius: 0.4em;
+}
+
+.speech-bubble-home:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 62px solid transparent;
+    border-bottom-color: #f4e5ea;
+    border-top: 0;
+    border-left: 0;
+    margin-left: -280px;
+    margin-top: -62px;
+}
+
+.speech-bubble-videos {
+    position: relative;
+    background: #f4e5ea;
+    border-radius: 0.4em;
+}
+
+.speech-bubble-videos:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 62px solid transparent;
+    border-bottom-color: #f4e5ea;
+    border-top: 0;
+    border-left: 0;
+    margin-left: -110px;
+    margin-top: -62px;
+}
+
+.speech-bubble-chat {
+    position: relative;
+    background: #f4e5ea;
+    border-radius: 0.4em;
+}
+
+.speech-bubble-chat:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 62px solid transparent;
+    border-bottom-color: #f4e5ea;
+    border-top: 0;
+    border-left: 0;
+    margin-left: 100px;
+    margin-top: -62px;
+}
+
+.speech-bubble-private {
+    position: relative;
+    background: #f4e5ea;
+    border-radius: 0.4em;
+}
+
+.speech-bubble-private:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 62px solid transparent;
+    border-bottom-color: #f4e5ea;
+    border-top: 0;
+    border-left: 0;
+    margin-left: 320px;
+    margin-top: -62px;
+}
+
 .component {
     padding: 15px;
-    margin-top: 30px;
+    margin-top: 45px;
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #26757e;
+
     /* display: flex;
     justify-content: center;
     align-items: center;
@@ -174,10 +287,10 @@ button {
 
 .chat-bubble-left {
     position: relative;
-    background: #8000ff;
+    background: #26757e;
     border-radius: 0.4em;
     padding: 10px;
-    color: pink;
+    color: #f4e5ea;
     box-shadow: 4px 4px 4px #999;
 }
 .chat-bubble-left:after {
@@ -188,7 +301,7 @@ button {
     width: 0;
     height: 0;
     border: 27px solid transparent;
-    border-right-color: #8000ff;
+    border-right-color: #26757e;
     border-left: 0;
     border-bottom: 0;
     margin-top: -13.5px;
@@ -197,10 +310,10 @@ button {
 
 .chat-bubble-right {
     position: relative;
-    background: #8000ff;
+    background: #26757e;
     border-radius: 0.4em;
     padding: 10px;
-    color: pink;
+    color: #f4e5ea;
     box-shadow: 4px 4px 4px #999;
 }
 
@@ -212,7 +325,7 @@ button {
     width: 0;
     height: 0;
     border: 27px solid transparent;
-    border-left-color: #8000ff;
+    border-left-color: #26757e;
     border-right: 0;
     border-top: 0;
     margin-top: -13.5px;
@@ -230,10 +343,10 @@ button {
 }
 .messenger-name-right {
     margin-left: 70px;
-    color: #8000ff;
+    color: #26757e;
 
     padding: 10px;
-    border: 3px solid #8000ff;
+    border: 3px solid #26757e;
     border-radius: 50%;
     font-weight: bolder;
     line-height: 2;
@@ -245,9 +358,9 @@ button {
 }
 .messenger-name-left {
     margin-right: 70px;
-    color: #8000ff;
+    color: #26757e;
     padding: 10px;
-    border: 3px solid #8000ff;
+    border: 3px solid #26757e;
     border-radius: 50%;
     font-weight: bolder;
     line-height: 2;
@@ -258,20 +371,27 @@ button {
     flex-direction: column;
 
     align-items: center;
-    color: blue;
+    color: #26757e;
 }
 .textarea {
     width: 80vw;
     height: 100px;
-    border: 3px solid blue;
-    border-color: blue;
+    border: 3px solid #26757e;
+    border-color: #26757e;
     box-shadow: 4px 4px 4px #999;
     border-radius: 0.4em;
     font-size: 1.2em;
     color: inherit;
+    margin: 10px;
 }
 .online-users-buttons-container {
     display: flex;
+    flex-wrap: wrap;
+}
+.online-button {
+    margin: 10px;
+    color: #26757e;
+    font-size: 1.1em;
 }
 
 .heading-and-x {
@@ -286,4 +406,23 @@ button {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
     justify-items: center;
+}
+.single-video-container {
+    border: 3px solid #26757e;
+    padding: 10px;
+}
+
+.error {
+    text-align: center;
+    font-size: 20px;
+}
+.padding25 {
+    padding: 25px;
+}
+
+.upload-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    padding: 10px;
 }

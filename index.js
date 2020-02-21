@@ -209,10 +209,14 @@ app.get("/welcome", function(req, res) {
         res.sendFile(__dirname + "/index.html");
     }
 });
-// app.get("/logout", function(req, res) {
-//     req.session = null;
-//     res.redirect("/login");
-// });
+app.get("/logout", function(req, res) {
+    req.session = null;
+    res.redirect("/login");
+});
+
+app.get("/", function(req, res) {
+    res.redirect("/home");
+});
 
 app.get("*", function(req, res) {
     if (!req.session.userId) {
