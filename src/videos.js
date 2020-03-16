@@ -23,13 +23,24 @@ export default function Videos() {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <input type="text" name="title" placeholder="Title" />
                     <input
+                        className="input"
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                    />
+                    <input
+                        className="input"
                         type="text"
                         name="username"
                         placeholder="Your Username"
                     />
-                    <input type="file" name="file" accept="image/*" />
+                    <input
+                        className="input"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                    />
                     <button className="button">Submit</button>
                 </div>
             )}
@@ -91,7 +102,7 @@ export default function Videos() {
                     />
                 </div>
                 <div className="single-video-container">
-                    <h3>How to attach afile to en email - aol</h3>
+                    <h3>How to attach a file to en email - gmx</h3>
                     <video
                         controls
                         src="/Testvideo-forboomers.mp4"
