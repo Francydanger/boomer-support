@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "./axios";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default class Login extends React.Component {
@@ -9,13 +9,11 @@ export default class Login extends React.Component {
         this.state = {};
     }
     handleChange(e) {
-        //this [e.target.name] = e.target.value; would also work - without the state
         this.setState({
             [e.target.name]: e.target.value
         });
     }
     submit() {
-        //or just axios.post("/register", this.state)
         console.log(this);
         axios
             .post("/login", {
@@ -23,8 +21,6 @@ export default class Login extends React.Component {
                 password: this.state.password
             })
             .then(({ data }) => {
-                console.log("Data from axios post register: ", data);
-                console.log(data);
                 if (data[0].id) {
                     console.log("data success");
                     location.replace("/");
@@ -69,7 +65,6 @@ export default class Login extends React.Component {
                         Login
                     </button>
                     <HashRouter>
-                        {/* put link thing here */}
                         <Link className="link" to="/">
                             Register
                         </Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Route } from "react-router-dom"; //this always adds a hash /#/ is "/"
+import { HashRouter, Route } from "react-router-dom";
 import Login from "./login";
 import Registration from "./registration";
 import Reset from "./reset";

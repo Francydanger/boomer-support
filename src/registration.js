@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "./axios"; //from now on always require the copy of axios from axios.js instead of from the module
-import { HashRouter, Route } from "react-router-dom";
+import axios from "./axios";
+import { HashRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default class Registration extends React.Component {
@@ -9,7 +9,6 @@ export default class Registration extends React.Component {
         this.state = { category: "boomer" };
     }
     handleChange(e) {
-        //this [e.target.name] = e.target.value; would also work - without the state
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -34,8 +33,6 @@ export default class Registration extends React.Component {
                     console.log("data success");
                     location.replace("/");
                 } else {
-                    //i cannot get in here, whyyyy?
-                    //failure
                     console.log("data fail");
                     this.setState({
                         error: true
@@ -102,7 +99,6 @@ export default class Registration extends React.Component {
                         Register
                     </button>
                     <HashRouter>
-                        {/* put link thing here */}
                         <Link className="link" to="/login">
                             Login
                         </Link>

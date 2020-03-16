@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
-import { socket } from "./socket";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BrowserRouter, Route } from "react-router-dom";
 
 export default function Videos() {
-    // const onlineUsers = useSelector(state => state && state.onlineUsers);
-    // console.log("onlineUsers: ", onlineUsers);
     const users = useSelector(state => state && state.users);
     return (
         <div className="component speech-bubble-videos">

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { socket } from "./socket";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import { startPrivateChat } from "./actions";
 
 export function PrivateChat() {
     const loggedInId = useSelector(state => state && state.loggedInId);
@@ -16,7 +15,6 @@ export function PrivateChat() {
         state => state.privateChatIsVisible
     );
     console.log("privateChatVisible", privateChatIsVisible);
-    // const [privateChattee, setPrivateChattee] = useState("");
 
     const privateChatMessages = useSelector(
         state => state && state.privateChatMessages
@@ -26,25 +24,13 @@ export function PrivateChat() {
     const elemRef = useRef();
     console.log("elemRef:", elemRef);
     useEffect(() => {
-        // console.log("chat mounted!!!!!");
-        // console.log("elemRef:", elemRef);
-        // let { clientHeight, scrollTop, scrollHeight } = elemRef.current;
-        // console.log("scrolltop: ", scrollTop);
-        // console.log("scrolltop: ", elemRef.current.scrollTop);
-        // console.log("clientheight: ", elemRef.current.clientHeight);
-        // console.log("scrollheight:", elemRef.current.scrollHeight);
         elemRef.current.scrollTop =
-            elemRef.current.scrollHeight - elemRef.current.clientHeight; // seems perfect for destructuring.
+            elemRef.current.scrollHeight - elemRef.current.clientHeight;
     }, [privateChattee]);
 
-    //tipps: two things we want to emt from server: last 10 chat messages, and when user tpes something , send the text (we know id of user who send message, so with new query we can show who is the sender - late rsend it to frot end, to socket -actions just gives t reducer . reducer does different things depending on soe things)
-
     const keyCheck = e => {
-        // console.log("what the user is typing: ", e.target.value);
-        // console.log("which ky user pressed:", e.keyCode);
-        // console.log("which ky user pressed:", e.key);
         if (e.key === "Enter") {
-            e.preventDefault(); //stops the annoying moving to a new line even after text has been set to empty string.
+            e.preventDefault();
             console.log("after enter what user has typed: ", e.target.value);
             socket.emit(
                 "privateChatMessage",
@@ -56,11 +42,6 @@ export function PrivateChat() {
     };
 
     const handleClick = id => {
-        // setPrivateChattee(id);
-        // console.log("id: ", id);
-        // console.log("privateChatteeid: ", privateChattee);
-        // // var hello = "hi there";
-        // // socket.emit("privateChatMessage", id);
         socket.emit("showPrivateChat", id);
     };
 
@@ -101,7 +82,7 @@ export function PrivateChat() {
                             This is a private chat between you, {users.first}(id
                             {loggedInId}) and{" "}
                             {privateChattee && <p>{privateChattee.first}</p>}
-                        </h2> */}
+                        </h2> make his work somehow!!!*/}
                         {privateChatMessages &&
                             privateChatMessages.map((msg, index) => {
                                 return (

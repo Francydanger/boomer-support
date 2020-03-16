@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
-import { socket } from "./socket";
+import React from "react";
+
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { BrowserRouter, Route } from "react-router-dom";
 
 export default function Home() {
-    // const onlineUsers = useSelector(state => state && state.onlineUsers);
-    // console.log("onlineUsers: ", onlineUsers);
     const users = useSelector(state => state && state.users);
     if (users && users.category == "millenial") {
         return (

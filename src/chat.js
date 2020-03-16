@@ -14,28 +14,13 @@ export function Chat() {
     const elemRef = useRef();
     console.log("elemRef:", elemRef);
     useEffect(() => {
-        // console.log("chat mounted!!!!!");
-        // console.log("elemRef:", elemRef);
-        // let { clientHeight, scrollTop, scrollHeight } = elemRef.current;
-        // console.log("scrolltop: ", scrollTop);
-        // console.log("scrolltop: ", elemRef.current.scrollTop);
-        // console.log("clientheight: ", elemRef.current.clientHeight);
-        // console.log("scrollheight:", elemRef.current.scrollHeight);
         elemRef.current.scrollTop =
-            elemRef.current.scrollHeight - elemRef.current.clientHeight; // seems perfect for destructuring.
+            elemRef.current.scrollHeight - elemRef.current.clientHeight;
     }, [chatMessages]);
 
-    //tipps: two things we want to emt from server: last 10 chat messages, and when user tpes something , send the text (we know id of user who send message, so with new query we can show who is the sender - late rsend it to frot end, to socket -actions just gives t reducer . reducer does different things depending on soe things)
-
     const keyCheck = e => {
-        // console.log("what the user is typing: ", e.target.value);
-        // console.log("which ky user pressed:", e.keyCode);
-        // console.log("which ky user pressed:", e.key);
         if (e.key === "Enter") {
-            e.preventDefault(); //stops the annoying moving to a new line even after text has been set to empty string.
-            console.log("after enter what user has typed: ", e.target.value);
-            //test-emit from class
-            // socket.emit("my amazing chat message: ", e.target.value);
+            e.preventDefault();
             socket.emit("chatMessage", e.target.value);
             e.target.value = "";
         }

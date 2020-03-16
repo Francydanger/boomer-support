@@ -2,9 +2,9 @@ const aws = require("aws-sdk");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
-    secrets = process.env; // in prod the secrets are environment variables
+    secrets = process.env;
 } else {
-    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+    secrets = require("./secrets");
 }
 
 const ses = new aws.SES({

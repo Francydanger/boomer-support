@@ -1,10 +1,5 @@
 import axios from "./axios";
 
-export function fn() {
-    //here will be a lot of functions, most will be making axios requests and all of them will retun objects that have a type property, types should be written in capital letters with underscores! ex. "ALL_CAPS_WITH_UNDERSCORES"
-    //here will be three functoin making axios requests - reducers will have one if block per action
-}
-
 export async function putUserInfoInRedux() {
     const { data } = await axios.get("/user.json");
     console.log("Data from axios putUserInfoInRedux", data);
@@ -57,14 +52,6 @@ export async function addChatMessage(message) {
         chatMessage: message
     };
 }
-
-// export async function getPrivateChatMessages(messages) {
-//     console.log("messages in get privatchatmessages actions:", messages);
-//     return {
-//         type: "GET_PRIVATE_CHAT_MESSAGES",
-//         privateChatMessages: messages
-//     };
-// }
 
 export async function addPrivateChatMessage(message) {
     console.log("message in addPRIVATEchatmessage actions:", message);

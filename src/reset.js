@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "./axios"; //from now on always require the copy of axios from axios.js instead of from the module
+import axios from "./axios";
 import { HashRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -9,14 +9,12 @@ export default class Reset extends React.Component {
         this.state = { step: "start", error: false, email: null, code: null };
     }
     handleChange(e) {
-        //this [e.target.name] = e.target.value; would also work - without the state
         this.setState({
             [e.target.name]: e.target.value
         });
     }
     submit() {
         //or just axios.post("/register", this.state)
-        console.log("This in submit reset", this);
         axios
             .post("/reset/start", {
                 email: this.state.email
@@ -26,10 +24,7 @@ export default class Reset extends React.Component {
                 if (data.success) {
                     console.log("data success");
                     this.setState({ step: "verify" });
-                    // location.replace("/reset/verify");
                 } else {
-                    //i cannot get in here, whyyyy?
-                    //failure
                     console.log("data fail in axios pos reset/start");
                     this.setState({
                         error: true
@@ -128,7 +123,6 @@ export default class Reset extends React.Component {
                     <div>
                         <div>Your password has been successfully changed</div>
                         <HashRouter>
-                            {/* put link thing here */}
                             <Link to="/login">Login</Link>
                         </HashRouter>
                     </div>
