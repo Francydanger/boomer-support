@@ -46,7 +46,7 @@ export default function Videos() {
                     <h3>How to start a TeamViewer Session</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/3o6Ztr9s7vPAS8XtK0/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
@@ -57,7 +57,7 @@ export default function Videos() {
                     <h3>Sharpen your vision: Find the X</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/11xBk5MoWjrYoE/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
@@ -68,7 +68,7 @@ export default function Videos() {
                     <h3>How to install an adblocker</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/PvvSfSDFoAL5e/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
@@ -79,7 +79,7 @@ export default function Videos() {
                     <h3>How to find the menu</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/5xaOcLC7J651Xn3Fz0I/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
@@ -90,7 +90,7 @@ export default function Videos() {
                     <h3>How to attach a file to an e-mail - gmail</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/RLhSYE7l8g3oDZXXfv/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
@@ -101,7 +101,7 @@ export default function Videos() {
                     <h3>How to attach a file to en email - gmx</h3>
                     <video
                         controls
-                        src="/Testvideo-forboomers.mp4"
+                        src="https://media.giphy.com/media/26u6dIwIphLj8h10A/giphy.gif"
                         allowFullScreen
                         width={450}
                         height={315}
